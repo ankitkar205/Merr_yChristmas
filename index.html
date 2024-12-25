@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff6b6b, #ffe66d);
+            overflow: hidden;
+            color: white;
+        }
+
+        #container {
+            text-align: center;
+            display: none;
+        }
+
+        .wish {
+            font-size: 2rem;
+            font-weight: bold;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff6b6b, 0 0 10px #ffe66d;
+            }
+            to {
+                text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ffe66d;
+            }
+        }
+
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .snow div {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .start-section {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        #name {
+            padding: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: 2px solid #ffe66d;
+            outline: none;
+            width: 80%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        #name:focus {
+            border-color: #ff6b6b;
+        }
+
+        #start {
+            background: #ff6b6b;
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        #start:hover {
+            transform: scale(1.1);
+        }
+
+        .decorations {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .tree {
+            font-size: 5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .gifts {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .gift {
+            font-size: 2rem;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .santa {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .santa img {
+            width: 280px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="start-section">
+        <h1>Enter Your Name</h1>
+        <input type="text" id="name" placeholder="Your Name" />
+        <br />
+        <button id="start">Get Wish</button>
+        <div class="decorations">
+            <div class="tree">🎄</div>
+            <div class="gifts">
+                <div class="gift">🎁</div>
+                <div class="gift">🎁</div>
+                <div class="gift">🎁</div>
+            </div>
+            <div class="santa">
+                <img src="santa.png" alt="Santa Claus" />
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <h1 id="personalized-wish" class="wish"></h1>
+        <p>Wishing you a joyous Christmas filled with love and laughter!</p>
+        <div class="snow" id="snow"></div>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('start');
+        const nameInput = document.getElementById('name');
+        const container = document.getElementById('container');
+        const startSection = document.querySelector('.start-section');
+        const wish = document.getElementById('personalized-wish');
+        const snowContainer = document.getElementById('snow');
+
+        startButton.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            if (name) {
+                wish.textContent = `Merry Christmas, ${name}!`;
+                startSection.style.display = 'none';
+                container.style.display = 'block';
+                generateSnow();
+            } else {
+                alert('Please enter your name!');
+            }
+        });
+
+        function generateSnow() {
+            const snowflakes = 100;
+            for (let i = 0; i < snowflakes; i++) {
+                const snowflake = document.createElement('div');
+                const size = Math.random() * 10 + 2;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = `${left}%`;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.top = `${Math.random() * 100 - 100}px`;
+                snowContainer.appendChild(snowflake);
+            }
+        }
+    </script>
+</body>
+</html>
